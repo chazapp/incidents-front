@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { Incident } from "../interfaces";
 import PersistentDrawer from "../components/Navigation";
+import IncidentCard from "../components/IncidentCard";
 import IncidentTable from "../components/IncidentTable";
 import IncidentSearch from "../components/IncidentSearch";
 
@@ -50,6 +51,10 @@ function makeIncidents(): Incident[] {
 
 function IncidentBrowser() {
    const incidents = makeIncidents();
+   const [ selectedIncident, setSelectedIncident ] = React.useState<Incident | null>(null);
+    const [ searchTerm, setSearchTerm ] = React.useState("");
+    const [ searchResults, setSearchResults ] = React.useState<Incident[]>(incidents);
+
     return (
         <Box sx={{
             display: "flex",
@@ -59,22 +64,18 @@ function IncidentBrowser() {
             <PersistentDrawer>
                 <Box aria-label="Content" sx={{
                     display: "flex",
-                    flexDirection: "column",
-                    width: "100vw",
                     rowGap: "1rem",
                     columnGap: "1rem",
                 }}>
                     <Box aria-label="incident-list" sx={{
                         display: "flex",
-                        width: "50%",
                         flexDirection: "column",
                         gap: "1rem",
                     }}>
                         <IncidentSearch />
-                        <IncidentTable rows={incidents} />
-                        
+                        <IncidentTable rows={incidents} onSelect={setSelectedIncident} />  
                     </Box>
-                    
+                    {selectedIncident && <IncidentCard incident={selectedIncident} />}
                 </Box>
             </PersistentDrawer>
         </Box>
