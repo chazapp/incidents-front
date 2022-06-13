@@ -10,3 +10,8 @@ jobs:
           node-version: 16
       - run: yarn install --frozen-lockfile
       - run: yarn test-ci
+      - name: Send coverage report
+        uses: codecov/codecov-action@v2
+        with:
+          verbose: true
+          fail_ci_if_error: true
