@@ -26,7 +26,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage --watchAll",
+    "test-ci": "CI=true react-scripts test --coverage",
     "eject": "react-scripts eject",
     "cypress:open": "node ./node_modules/cypress/bin/cypress open"
   },
@@ -49,7 +50,14 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^10.1.0",
-    "jest-watch-typeahead": "^1.1.0"
+    "cypress": "^10.1.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/path/to/dir/"
+    ],
+    "coverageReporters": ["text"]
   }
 }
