@@ -1,19 +1,18 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { Incident } from "../interfaces";
 import PersistentDrawer from "../components/Navigation";
 import IncidentCard from "../components/IncidentCard";
 import IncidentTable from "../components/IncidentTable";
 import IncidentSearch from "../components/IncidentSearch";
 
-
-function makeIncidents(): Incident[] {
+function makeIncidents(text: string): Incident[] {
     // This function returns a list of incidents
     //
     const incidents: Incident[] = [{
             id: 1,
             title: "Incident 1",
-            description: "This is incident 1",
+            description: text,
             status: "Open",
             severity: "Low",
             created_at: "2020-01-01",
@@ -50,10 +49,13 @@ function makeIncidents(): Incident[] {
 
 
 function IncidentBrowser() {
-   const incidents = makeIncidents();
+    const [text, setText] = React.useState("");
+
+    fetch("/Jewel.txt").then((response) => response.text()).then((text) => {
+        setText(text);
+    });
+   const incidents = makeIncidents(text);
    const [ selectedIncident, setSelectedIncident ] = React.useState<Incident | null>(null);
-    const [ searchTerm, setSearchTerm ] = React.useState("");
-    const [ searchResults, setSearchResults ] = React.useState<Incident[]>(incidents);
 
     return (
         <Box sx={{
