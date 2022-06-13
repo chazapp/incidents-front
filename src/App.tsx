@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, BrowserRouter } from 'react-router-dom';
 import Login from "./routes/Login";
 import IncidentBrowser from './routes/IncidentsBrowser';
 
@@ -27,11 +27,13 @@ function About() {
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="about" element={<About />} />
-        <Route path="/" element={<IncidentBrowser />} />
-      </Routes>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="about" element={<About />} />
+          <Route path="/" element={<IncidentBrowser />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

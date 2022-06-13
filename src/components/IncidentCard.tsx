@@ -9,27 +9,13 @@ function IncidentCard(props: { incident: Incident }) {
         <Paper sx={{
             display: "flex",
             flexGrow: "1",
+            flexDirection: "column",
         }}>
-            <Box sx={{
+            <Box aria-label="incident-header" sx={{
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "1rem",
-                textAlign: "center",
-            }}>
-                <Typography variant="h6">{incident.title}</Typography>
-                <Typography variant="body1">{incident.status}</Typography>
-            </Box>
-            <Box sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
                 padding: "1rem",
             }}>
-                <Typography variant="body1">{incident.description}</Typography>
-                <Typography variant="body1">{incident.severity}</Typography>
+                <Typography variant="h5">{incident.title}</Typography>
             </Box>
         </Paper>
     );

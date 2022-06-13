@@ -100,7 +100,7 @@ function PersistentDrawer(props: { children: React.ReactNode }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            Incidents
           </Typography>
         </Toolbar>
       </AppBar>
