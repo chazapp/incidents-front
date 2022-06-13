@@ -225,6 +225,9 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
                         tabIndex={-1}
                         key={row.title}
                         onClick={(event) => onSelect(row) }
+                        sx={{
+                          cursor: 'pointer',
+                        }}
                       >
                         <TableCell
                           component="th"
