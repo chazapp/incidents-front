@@ -58,6 +58,6 @@
       "!<rootDir>/node_modules/",
       "!<rootDir>/path/to/dir/"
     ],
-    "coverageReporters": ["text"]
+    "coverageReporters": ["text", "json"]
   }
 }
