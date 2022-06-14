@@ -24,7 +24,7 @@ function IncidentCard(props: { incident: Incident }) {
             display: "flex",
             flexGrow: "1",
             flexDirection: "column",
-        }}>
+        }} elevation={3}>
             <Box aria-label="incident-header" sx={{
                 display: "flex",
                 padding: "1rem",
@@ -95,8 +95,8 @@ function IncidentCard(props: { incident: Incident }) {
                 flexGrow: "1",
                 flexDirection: "column",
                 padding: "1rem",
-                width: "parent",
                 whiteSpace: "pre-wrap",
+                wordBreak: "break-all",
             }}>
                 {description}
             </Box>
