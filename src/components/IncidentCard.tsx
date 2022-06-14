@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Paper, Divider, FormControl, InputLabel, InputAdornment, IconButton, OutlinedInput, Select, MenuItem } from "@mui/material";
 import { Incident } from "../interfaces";
 import EditIcon from '@mui/icons-material/Edit';
-import ReactMarkdown from 'react-markdown';
+
 
 function IncidentCard(props: { incident: Incident }) {
     const { incident } = props;
@@ -96,10 +96,9 @@ function IncidentCard(props: { incident: Incident }) {
                 flexDirection: "column",
                 padding: "1rem",
                 width: "parent",
+                whiteSpace: "pre-wrap",
             }}>
-                <ReactMarkdown>
-                    {description}
-                </ReactMarkdown>
+                {description}
             </Box>
         </Paper>
     );
