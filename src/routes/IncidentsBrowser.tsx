@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { Incident } from "../interfaces";
+import { Incident } from "../index.d";
 import PersistentDrawer from "../components/Navigation";
 import IncidentCard from "../components/IncidentCard";
 import IncidentTable from "../components/IncidentTable";

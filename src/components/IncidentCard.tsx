@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Paper, Divider, FormControl, InputLabel, InputAdornment, IconButton, OutlinedInput, Select, MenuItem } from "@mui/material";
-import { Incident } from "../interfaces";
+import { Incident } from "../index.d";
 import EditIcon from '@mui/icons-material/Edit';
 
 

@@ -17,7 +17,7 @@ import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import { Incident } from '../interfaces';
+import { Incident } from '../index.d';
 
 
 interface HeadCell {
