@@ -3,7 +3,7 @@ import './App.css';
 import { Routes, Route, Link, BrowserRouter } from 'react-router-dom';
 import Login from "./routes/Login";
 import IncidentBrowser from './routes/IncidentsBrowser';
-
+import axios from "axios";
 
 function About() {
   return (
@@ -25,6 +25,9 @@ function About() {
 
 
 function App() {
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+  axios.defaults.withCredentials = true;
+
   return (
     <div className="App">
       <BrowserRouter>

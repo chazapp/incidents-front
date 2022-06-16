@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -18,6 +18,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 const drawerWidth = 240;
 
@@ -75,6 +77,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 function PersistentDrawer(props: { children: React.ReactNode }) {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -84,6 +88,12 @@ function PersistentDrawer(props: { children: React.ReactNode }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+      axios.get("/auth/").then(() => {}).catch(() => {
+        navigate('/login');
+      });
+  });
 
   return (
     <Box sx={{ display: 'flex' }}>
