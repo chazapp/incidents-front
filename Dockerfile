@@ -1,5 +1,7 @@
 FROM node:16-alpine
 ENV GENERATE_SOURCEMAP=false
+ARG REACT_APP_API_URL=https://incidents-api.chaz.pro
+ENV REACT_APP_API_URL $REACT_APP_API_URL
 RUN yarn global add serve
 COPY package.json package.json
 COPY yarn.lock yarn.lock
