@@ -18,6 +18,16 @@ function LoginForm() {
             justifyContent: "center",
             margin: "auto",
         }}>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "auto",
+                marginBottom: "10%"
+            }}>
+                <img style={{width: "50%", height: "auto"}} src="/logo.png" alt="Logo" />
+            </Box>
             <Typography>Login</Typography>
             {error && <Typography color="error">{error}</Typography>}
             <Box sx={{
