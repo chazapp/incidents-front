@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import { Incident } from "../index.d";
 import PersistentDrawer from "../components/Navigation";
 import IncidentCard from "../components/IncidentCard";
 import IncidentTable from "../components/IncidentTable";
 import IncidentSearch from "../components/IncidentSearch";
+import axios from "axios";
 
 function makeIncidents(text: string): Incident[] {
     // This function returns a list of incidents
@@ -49,14 +50,24 @@ function makeIncidents(text: string): Incident[] {
 
 
 function IncidentBrowser() {
-    const [text, setText] = React.useState("");
+    const [incidents, setIncidents] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(true);
 
-    fetch("/Jewel.txt").then((response) => response.text()).then((text) => {
-        setText(text);
-    });
-   const incidents = makeIncidents(text);
-   const [ selectedIncident, setSelectedIncident ] = React.useState<Incident | null>(null);
+    const [ selectedIncident, setSelectedIncident ] = React.useState<Incident | null>(null);
+    useEffect(() => {
+        axios.get("/incidents/")
+            .then(res => {
+                setIncidents(res.data.results);
+                setIsLoading(false);
+            }).catch(err => {
+                console.log(err);
+            }).finally(() => {
+                setIsLoading(false);
+            }
+        );
+    }, []);
 
+    
     return (
         <Box sx={{
             display: "flex",
@@ -68,6 +79,7 @@ function IncidentBrowser() {
                     display: "flex",
                     rowGap: "1rem",
                     columnGap: "1rem",
+                    flexDirection: "row",
                 }}>
                     <Box aria-label="incident-list" sx={{
                         display: "flex",
