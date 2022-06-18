@@ -18,8 +18,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { getCsrfToken } from '../utils';
 
 const drawerWidth = 240;
 
@@ -66,6 +70,56 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const SideMenu = () => {
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  return (
+      <Box>
+        <IconButton
+              aria-label="more"
+              onClick={handleClick}
+              color="inherit"
+            >
+              <MoreVertIcon fontSize="large"/>
+            </IconButton>
+            <Menu
+              id="long-menu"
+              MenuListProps={{
+                'aria-labelledby': 'long-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                },
+              }}
+            >
+              <MenuItem key="Logout" onClick={() => {
+                  getCsrfToken().then((csrfToken: string) => {
+                    axios.post('/auth/logout/', {}, {
+                    headers: {
+                      "X-CSRFToken": csrfToken
+                    }
+                    })
+                  });
+                  handleClose()
+                  navigate('/login')
+              }}>
+                Logout
+              </MenuItem>
+            </Menu>
+          </Box>
+    )
+}
+
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -78,8 +132,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 function PersistentDrawer(props: { children: React.ReactNode }) {
   const theme = useTheme();
   const navigate = useNavigate();
-
   const [open, setOpen] = React.useState(false);
+  
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,9 +163,10 @@ function PersistentDrawer(props: { children: React.ReactNode }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography sx={{flexGrow: "1"}} variant="h6" noWrap component="div">
             Incidents
           </Typography>
+          <SideMenu />
         </Toolbar>
       </AppBar>
       <Drawer

@@ -6,4 +6,5 @@ export interface Incident {
     severity: string,
     created_at: string,
     updated_at: string,
-};
+}
+
