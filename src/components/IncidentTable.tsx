@@ -63,8 +63,8 @@ function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key,
     ): (
-    a: { [key in Key]: number | string },
-    b: { [key in Key]: number | string },
+    a: { [key in Key]: number | string | Date },
+    b: { [key in Key]: number | string | Date },
     ) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
@@ -213,8 +213,9 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
                 {rows.slice().sort(getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
+
+                    const { title, status, severity, created_at, updated_at } = row;
                     const labelId = `enhanced-table-checkbox-${index}`;
-  
                     return (
                       <TableRow
                         hover
@@ -234,11 +235,11 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
                         >
                           {row.id}
                         </TableCell>
-                        <TableCell align="left">{row.title}</TableCell>
-                        <TableCell align="left">{row.status}</TableCell>
-                        <TableCell align="left">{row.severity}</TableCell>
-                        <TableCell align="left">{row.created_at}</TableCell>
-                        <TableCell align="left">{row.updated_at}</TableCell>
+                        <TableCell align="left">{title}</TableCell>
+                        <TableCell align="left">{status}</TableCell>
+                        <TableCell align="left">{severity}</TableCell>
+                        <TableCell align="left">{new Date(created_at).toDateString()}</TableCell>
+                        <TableCell align="left">{new Date(updated_at).toDateString()}</TableCell>
                       </TableRow>
                     );
                   })}
