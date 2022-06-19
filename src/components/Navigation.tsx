@@ -104,14 +104,13 @@ const SideMenu = () => {
             >
               <MenuItem key="Logout" onClick={() => {
                   getCsrfToken().then((csrfToken: string) => {
+                    navigate('/login')
                     axios.post('/auth/logout/', {}, {
                     headers: {
                       "X-CSRFToken": csrfToken
                     }
                     })
                   });
-                  handleClose()
-                  navigate('/login')
               }}>
                 Logout
               </MenuItem>
