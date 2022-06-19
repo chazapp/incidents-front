@@ -9,14 +9,15 @@ import Dashboard from './routes/Dashboard';
 function App() {
   axios.defaults.baseURL = process.env.REACT_APP_API_URL;
   axios.defaults.withCredentials = true;
+  const [menuOpen, setMenuOpen] = React.useState(false);
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<IncidentBrowser />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<IncidentBrowser menuOpen={menuOpen} setMenuOpen={setMenuOpen} />} />
+          <Route path="/dashboard" element={<Dashboard menuOpen={menuOpen} setMenuOpen={setMenuOpen} />} />
         </Routes>
       </BrowserRouter>
     </div>

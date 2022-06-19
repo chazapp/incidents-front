@@ -49,10 +49,10 @@ function makeIncidents(text: string): Incident[] {
 
 
 
-function IncidentBrowser() {
+function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [incidents, setIncidents] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
-
+    const { menuOpen, setMenuOpen } = props;
     const [ selectedIncident, setSelectedIncident ] = React.useState<Incident | null>(null);
     useEffect(() => {
         axios.get("/incidents/")
@@ -74,7 +74,11 @@ function IncidentBrowser() {
             flexDirection: "row",
             columnGap: "1vh",
         }}>
-            <PersistentDrawer>
+            <PersistentDrawer
+                open={menuOpen}
+                setOpen={setMenuOpen}
+                pageName="Incidents"
+            >
                 <Box aria-label="Content" sx={{
                     display: "flex",
                     rowGap: "1rem",

@@ -129,10 +129,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-function PersistentDrawer(props: { children: React.ReactNode }) {
+function PersistentDrawer(props: { children: React.ReactNode, pageName: string, open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
   const theme = useTheme();
+
+  const { open, setOpen, pageName } = props;
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
   
 
   const handleDrawerOpen = () => {
@@ -164,7 +165,7 @@ function PersistentDrawer(props: { children: React.ReactNode }) {
             <MenuIcon />
           </IconButton>
           <Typography sx={{flexGrow: "1"}} variant="h6" noWrap component="div">
-            Incidents
+            {pageName}
           </Typography>
           <SideMenu />
         </Toolbar>
