@@ -12,10 +12,6 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { Incident } from '../index.d';
 import IncidentAdd from './IncidentAdd';
@@ -176,6 +172,7 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2, padding: "1em" }} elevation={3}>
           <EnhancedTableToolbar numSelected={selected.length} setSelectedIncident={onSelect}/>
+          {isLoading ? <LinearProgress /> : null}
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -190,10 +187,9 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
                 rowCount={rows.length}
               />
               <TableBody>
-                {isLoading ? <LinearProgress /> : rows.slice().sort(getComparator(order, orderBy))
+                {rows.slice().sort(getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
-
                     const { title, status, severity, created_at, updated_at } = row;
                     const labelId = `enhanced-table-checkbox-${index}`;
                     return (
