@@ -17,11 +17,9 @@ test('renders the login page', () => {
 
 
 test('renders the IncidentBrowser page', () => {
-  const [open, setOpen] = React.useState(false);
-
   render(
   <BrowserRouter>
-    <IncidentBrowser  menuOpen={open} setMenuOpen={setOpen}/>
+    <IncidentBrowser  menuOpen={true} setMenuOpen={() => {}}/>
   </BrowserRouter>);
   const incidentBrowser = screen.getAllByText('Incidents')[0];
   expect(incidentBrowser).toBeInTheDocument();
