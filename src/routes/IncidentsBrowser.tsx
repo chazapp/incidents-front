@@ -5,6 +5,7 @@ import PersistentDrawer from "../components/Navigation";
 import IncidentCard from "../components/IncidentCard";
 import IncidentTable from "../components/IncidentTable";
 import IncidentSearch from "../components/IncidentSearch";
+import IncidentAdd from "../components/IncidentAdd";
 import axios from "axios";
 
 function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
@@ -48,8 +49,13 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
                         flexDirection: "column",
                         gap: "1rem",
                     }}>
-                        <IncidentSearch />
-                        <IncidentTable rows={incidents} onSelect={setSelectedIncident} />  
+                        <Box sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                        }}>
+                            <IncidentSearch />
+                        </Box>
+                        <IncidentTable rows={incidents} onSelect={setSelectedIncident} isLoading={isLoading}/>  
                     </Box>
                     {selectedIncident && <IncidentCard incident={selectedIncident} />}
                 </Box>

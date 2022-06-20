@@ -18,6 +18,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { Incident } from '../index.d';
+import IncidentAdd from './IncidentAdd';
+import { LinearProgress } from '@mui/material';
 
 
 interface HeadCell {
@@ -108,10 +110,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   
   interface EnhancedTableToolbarProps {
     numSelected: number;
+    setSelectedIncident: React.Dispatch<React.SetStateAction<Incident | null>>;
   }
   
   const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const { numSelected } = props;
+    const { numSelected, setSelectedIncident } = props;
   
     return (
       <Toolbar
@@ -124,16 +127,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           }),
         }}
       >
-        {numSelected > 0 ? (
-          <Typography
-            sx={{ flex: '1 1 100%' }}
-            color="inherit"
-            variant="subtitle1"
-            component="div"
-          >
-            {numSelected} selected
-          </Typography>
-        ) : (
+        <IncidentAdd setSelectedIncident={setSelectedIncident}/>
           <Typography
             sx={{ flex: '1 1 100%' }}
             variant="h6"
@@ -142,27 +136,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           >
             Incidents
           </Typography>
-        )}
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton>
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
       </Toolbar>
     );
   };
 
 
-function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React.SetStateAction<Incident | null>> }) {
-    const { rows, onSelect } = props;
+function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React.SetStateAction<Incident | null>>, isLoading: boolean }) {
+    const { rows, onSelect, isLoading } = props;
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Incident>('id');
     const [selected] = React.useState<Incident[]>([]);
@@ -195,7 +175,7 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
     return (
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2, padding: "1em" }} elevation={3}>
-          <EnhancedTableToolbar numSelected={selected.length} />
+          <EnhancedTableToolbar numSelected={selected.length} setSelectedIncident={onSelect}/>
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -210,7 +190,7 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
                 rowCount={rows.length}
               />
               <TableBody>
-                {rows.slice().sort(getComparator(order, orderBy))
+                {isLoading ? <LinearProgress /> : rows.slice().sort(getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
 
@@ -221,7 +201,7 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row.title}
+                        key={row.id}
                         onClick={(event) => onSelect(row) }
                         sx={{
                           cursor: 'pointer',

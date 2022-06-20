@@ -7,8 +7,13 @@ import React from "react";
 
 function IncidentSearch() {
     return (
-        <Box>
-            <FormControl sx={{width: "80%"}} variant="outlined">
+        <Box sx={{
+            display: "flex",
+            flexGrow: "1",
+        }}>
+            <FormControl sx={{
+                width: "100%",
+            }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">Search</InputLabel>
             <OutlinedInput
                 id="outlined-adornment-password"

@@ -147,7 +147,7 @@ function PersistentDrawer(props: { children: React.ReactNode, pageName: string, 
       axios.get("/auth/").then(() => {}).catch(() => {
         navigate('/login');
       });
-  });
+  }, [navigate]);
 
   return (
     <Box sx={{ display: 'flex' }}>
