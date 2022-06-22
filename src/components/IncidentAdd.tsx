@@ -7,7 +7,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 const IncidentAdd = (props: {setSelectedIncident: React.Dispatch<React.SetStateAction<Incident | null>>}) => {
     const { setSelectedIncident } = props;
     const newIncident: Incident = {
-        id: 0,
+        id: -1,
         title: "",
         description: "",
         severity: "",
