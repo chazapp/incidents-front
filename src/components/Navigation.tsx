@@ -37,14 +37,14 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     duration: theme.transitions.duration.leavingScreen,
   }),
   marginLeft: `-${drawerWidth}px`,
-  width: window.innerWidth - 15,
+  width: window.innerWidth - 20,
   ...(open && {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
-    width: window.innerWidth - drawerWidth - 15,
+    width: window.innerWidth - drawerWidth - 20,
     
   }),
 }));
