@@ -6,7 +6,7 @@ import SendIcon from "@mui/icons-material/Send";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 
-function IncidentCard(props: { incident: Incident }) {
+function IncidentCard(props: { incident: Incident, onCreate: (incident: Incident) => void, onUpdate: (incident: Incident) => void, onDelete: (incident: Incident) => void }) {
     const { incident } = props;
     const [ title, setTitle ] = React.useState("");
     const [ severity, setSeverity ] = React.useState("");
@@ -26,6 +26,23 @@ function IncidentCard(props: { incident: Incident }) {
             setEditTitle(true);
         }
     }, [incident]);
+
+    const makeIncident = () => {
+        const newIncident: Incident = {
+            id: incident.id,
+            title,
+            severity,
+            status,
+            description,
+            created_at: incident.created_at,
+            updated_at: incident.updated_at,
+        };
+        return newIncident;
+    }
+
+    const validate = () => {
+        return title.length > 0 && severity.length > 0 && status.length > 0 && description.length > 0;
+    }
 
     return (
         <Paper sx={{
@@ -96,10 +113,23 @@ function IncidentCard(props: { incident: Incident }) {
                         </FormControl>
                     </Box>
                     <Box sx={{ display: "flex", gap: "1rem" }}>
-                        <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>
+                        <Button variant="outlined" color="error" startIcon={<DeleteIcon />} disabled={incident.id === -1}
+                            onClick={() => {
+                                const newIncident = makeIncident();
+                                props.onDelete(newIncident);
+                            }} data-cy="incident-delete-button">
                             Delete
                         </Button>
-                        <Button variant="contained" endIcon={<SendIcon />}>
+                        <Button variant="contained" endIcon={<SendIcon />} disabled={!validate()}
+                            onClick={() => {
+                                const newIncident = makeIncident();
+                                if (incident.id === -1) {
+                                    props.onCreate(newIncident);
+                                } else {
+                                    props.onUpdate(newIncident);
+                                }   
+                            }}
+                        >
                             Save
                         </Button>
                     </Box>

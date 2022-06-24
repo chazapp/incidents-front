@@ -44,7 +44,7 @@ function LoginForm() {
                     onChange={(e) => setEmail(e.target.value)}
                     margin="normal"
                     variant="outlined"
-                    data-cy="email-input"
+                    data-cy="login-email"
                 />
                 <TextField
                     id="password"
@@ -54,14 +54,14 @@ function LoginForm() {
                     onChange={(e) => setPassword(e.target.value)}
                     margin="normal"
                     variant="outlined"
-                    data-cy="password-input"
+                    data-cy="login-password"
 
                 />
                 <Button
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                        getCsrfToken().then((csrfToken) => {
+                    getCsrfToken().then((csrfToken) => {    
                             axios.post("/auth/", {
                                 "username": email,
                                 password,
@@ -69,16 +69,16 @@ function LoginForm() {
                                 headers: {
                                     "X-CSRFToken": csrfToken, 
                                 }
-                            }).then((response) => {    
-                                if (response.data.error) {
-                                    setError(response.data.error);
-                                } else {
-                                    navigate("/");
+                            }).then((response) => {
+                                navigate("/")
+                            }).catch((err) => {    
+                                if (err.response.status === 400) {
+                                    setError("Invalid email or password");
                                 }
                             });
                         });
                     }}
-                    data-cy="login-button"
+                    data-cy="login-submit"
                 >
                     Login
                 </Button>
@@ -89,16 +89,13 @@ function LoginForm() {
 
 function Login() {
     const navigate = useNavigate();
-
+    
     useEffect(() => {
         axios.get("/auth/").then((response) => {
             if (response.status === 200) {
                 navigate("/");
             }
         }).catch((err) => {
-            if (err.response.status !== 403) {
-                console.log(err);
-            }
         });
     });
 
@@ -109,7 +106,7 @@ function Login() {
         }}>
             <Box aria-label="login-panel" sx={{
                 display: "flex",
-                width: "30vw",
+                width: "25vw",
                 height: "100vh",
                 backgroundColor: "white",
             }}>
@@ -117,10 +114,10 @@ function Login() {
             </Box>
             <Box aria-label="login-background" sx={{
                 display: "flex",
-                fill: "black",
+                width: "75vw",
                 height: "100vh",
             }}>
-                <img src="https://source.unsplash.com/collection/190727/1600x900" alt="login-background" />
+                <img style={{maxWidth: "100%"}} src="/login-background.jpg" alt="login-background" />
             </Box>
         </Box>
     );

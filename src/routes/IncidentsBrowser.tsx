@@ -7,12 +7,14 @@ import IncidentTable from "../components/IncidentTable";
 import IncidentSearch from "../components/IncidentSearch";
 
 import axios from "axios";
+import { getCsrfToken } from "../utils";
 
 function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const [incidents, setIncidents] = React.useState([]);
+    const [incidents, setIncidents] = React.useState<Incident[]>([]);
     const [isLoading, setIsLoading] = React.useState(true);
     const { menuOpen, setMenuOpen } = props;
     const [ selectedIncident, setSelectedIncident ] = React.useState<Incident | null>(null);
+   
     useEffect(() => {
         axios.get("/incidents/")
             .then(res => {
@@ -26,7 +28,66 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
         );
     }, []);
 
+    const onCreate = (incident: Incident) => {
+        getCsrfToken().then(csrf => {
+            setIsLoading(true);
+            axios.post("/incidents/", incident, {
+                headers: {
+                    "X-CSRFToken": csrf,
+                },
+            }).then((response) => {
+                if (response.status === 201) {
+                    setIncidents([...incidents, response.data]);
+                    setSelectedIncident(null);
+                }
+            }).catch(err => {
+                console.log(err);
+            }).finally(() => {
+                setIsLoading(false);
+            });
+        })
+    };
+
+    const onUpdate = (incident: Incident) => {
+        getCsrfToken().then(csrf => {
+            setIsLoading(true);
+            axios.put(`/incidents/${incident.id}/`, incident, {
+                headers: {
+                    "X-CSRFToken": csrf,
+                },
+            }).then((response) => {
+                if (response.status === 200) {
+                    setIncidents(incidents.map(i => i.id === incident.id ? incident : i));
+                    setSelectedIncident(null);
+                }
+            }).catch(err => {
+                console.log(err);
+            }).finally(() => {
+                setIsLoading(false);
+            });
+        })
+    };
     
+    const onDelete = (incident: Incident) => {
+        getCsrfToken().then(csrf => {
+            setIsLoading(true);
+            axios.delete(`/incidents/${incident.id}/`, {
+                headers: {
+                    "X-CSRFToken": csrf,
+                },
+            }).then((response) => {
+                if (response.status === 204) {
+                    setIncidents(incidents.filter(i => i.id !== incident.id));
+                    setSelectedIncident(null);
+                }
+            }).catch(err => {
+                console.log(err);
+            }).finally(() => {
+                setIsLoading(false);
+            });
+        })
+    };
+
     return (
         <Box sx={{
             display: "flex",
@@ -57,7 +118,7 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
                         </Box>
                         <IncidentTable rows={incidents} onSelect={setSelectedIncident} isLoading={isLoading}/>  
                     </Box>
-                    {selectedIncident && <IncidentCard incident={selectedIncident} />}
+                    {selectedIncident && <IncidentCard incident={selectedIncident} onCreate={onCreate} onDelete={onDelete} onUpdate={onUpdate} />}
                 </Box>
             </PersistentDrawer>
         </Box>
