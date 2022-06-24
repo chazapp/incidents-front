@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import Login from './routes/Login';
 import IncidentBrowser from './routes/IncidentsBrowser';
 import { BrowserRouter } from 'react-router-dom';
+import App from './App';
 
 
 test('renders the login page', () => {
@@ -13,14 +14,4 @@ test('renders the login page', () => {
   );
   const login = screen.getAllByText('Login')[0];
   expect(login).toBeInTheDocument();
-});
-
-
-test('renders the IncidentBrowser page', () => {
-  render(
-  <BrowserRouter>
-    <IncidentBrowser  menuOpen={true} setMenuOpen={() => {}}/>
-  </BrowserRouter>);
-  const incidentBrowser = screen.getAllByText('Incidents')[0];
-  expect(incidentBrowser).toBeInTheDocument();
 });
