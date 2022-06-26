@@ -21,6 +21,7 @@ jobs:
     services:
       api:
         image: ghcr.io/incidents/incidents-api:latest
+
         credentials: 
           username: chazapp
           password: ${{ secrets.GITHUB_TOKEN }}
@@ -53,6 +54,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+      - name: Migrate database
+        run: docker exec -i api bash -c "python manage.py migrate"
+
       - run: yarn install --frozen-lockfile
       - run: yarn build
         env:
