@@ -39,6 +39,7 @@ jobs:
           DB_USER: incidents
           DB_PASSWORD: sup3r-passw0rd
           DB_PORT: 5432
+        options: --name api
       postgres:
         image: postgres:14.3
         ports:
