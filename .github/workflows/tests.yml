@@ -1,7 +1,7 @@
 name: Tests
 on: [push]
 jobs:
-  tests:
+  jest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -15,3 +15,47 @@ jobs:
         with:
           verbose: true
           fail_ci_if_error: true
+# This github actions runs the Cypress test suite against an API service
+  e2e:
+    runs-on: ubuntu-latest
+    services:
+      api:
+        image: ghcr.io/incidents/incidents-api:latest
+        ports:
+          - "8000:8000"
+        env:
+          SECRET_KEY: s3cr3t-key
+          ALLOWED_HOSTS: 127.0.0.1,localhost
+          ALLOWED_ORIGINS: http://localhost:3000
+          DEBUG: True
+          PRODUCTION: False
+          ADMIN_EMAIL: admin@incidents.com
+          ADMIN_PASSWORD: sup3r-passw0rd
+          DB_HOST: postgres
+          DB_NAME: incidents
+          DB_USER: incidents
+          DB_PASSWORD: sup3r-passw0rd
+          DB_PORT: 5432
+      postgres:
+        image: postgres:14.3
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: incidents
+          POSTGRES_PASSWORD: sup3r-passw0rd
+          POSTGRES_DB: incidents
+          POSTGRES_PORT: 5432
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+        env:
+          REACT_APP_API_URL: http://localhost:8000
+      - run: yarn cypress:ci
+        env:
+          CYPRESS_INCIDENTS_USER: $CYPRESS_INCIDENTS_USER
+          CYPRESS_INCIDENTS_PASSWORD: $CYPRESS_INCIDENTS_PASSWORD
+          CYPRESS_INCIDENTS_API_URL: $REACT_APP_API_URL
