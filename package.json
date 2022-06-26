@@ -32,7 +32,8 @@
     "test": "react-scripts test --coverage --watchAll",
     "test-ci": "CI=true react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "cypress:open": "node ./node_modules/cypress/bin/cypress open"
+    "cypress:open": "node ./node_modules/cypress/bin/cypress open",
+    "cypress:run": "node ./node_modules/cypress/bin/cypress run"
   },
   "eslintConfig": {
     "extends": [
@@ -54,7 +55,10 @@
   },
   "devDependencies": {
     "@types/dom-parser": "^0.1.1",
-    "cypress": "^10.1.0"
+    "camelcase": "6.3.0",
+    "cypress": "^10.1.0",
+    "dotenv": "^16.0.1",
+    "dotenv-parse-variables": "^2.0.0"
   },
   "jest": {
     "collectCoverageFrom": [
