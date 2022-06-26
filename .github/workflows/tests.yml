@@ -20,11 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     services:
       api:
-        image: ghcr.io/chazapp/incidents-api:latest
-
+        image: ghcr.io/chazapp/incidents-api:1.0.6-x86
         credentials: 
           username: chazapp
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GHCR_SECRET }}
         ports:
           - "8000:8000"
         env:
