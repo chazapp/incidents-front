@@ -32,6 +32,7 @@
     "test": "react-scripts test --coverage --watchAll",
     "test-ci": "CI=true react-scripts test --coverage",
     "eject": "react-scripts eject",
+    "run-prod": "serve -s build/",
     "cypress:open": "node ./node_modules/cypress/bin/cypress open",
     "cypress:run": "node ./node_modules/cypress/bin/cypress run",
     "cypress:ci": "start-server-and-test run-prod http://localhost:3000 cypress:run"
