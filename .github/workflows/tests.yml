@@ -21,6 +21,9 @@ jobs:
     services:
       api:
         image: ghcr.io/incidents/incidents-api:latest
+        credentials: 
+          username: chazapp
+          password: ${{ secrets.GITHUB_TOKEN }}
         ports:
           - "8000:8000"
         env:
