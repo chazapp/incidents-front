@@ -93,9 +93,9 @@ function IncidentCard(props: { incident: Incident, onCreate: (incident: Incident
                                 onChange={(e) => setSeverity(e.target.value)}
                                 data-cy="incident-severity-select"
                             >
-                                <MenuItem value="Low">Low</MenuItem>
-                                <MenuItem value="Medium">Medium</MenuItem>
-                                <MenuItem value="High">High</MenuItem>
+                                <MenuItem value="Low" data-cy="incident-severity-low">Low</MenuItem>
+                                <MenuItem value="Medium" data-cy="incident-severity-medium">Medium</MenuItem>
+                                <MenuItem value="High" data-cy="incident-severity-high">High</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl  sx={{minWidth: 120 }}>
@@ -107,8 +107,8 @@ function IncidentCard(props: { incident: Incident, onCreate: (incident: Incident
                                 onChange={(e) => setStatus(e.target.value)}
                                 data-cy="incident-status-select"
                             >
-                                <MenuItem value="Open">Open</MenuItem>
-                                <MenuItem value="Closed">Closed</MenuItem>
+                                <MenuItem value="Open" data-cy="incident-status-open">Open</MenuItem>
+                                <MenuItem value="Closed" data-cy="incident-status-closed">Closed</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
@@ -120,7 +120,7 @@ function IncidentCard(props: { incident: Incident, onCreate: (incident: Incident
                             }} data-cy="incident-delete-button">
                             Delete
                         </Button>
-                        <Button variant="contained" endIcon={<SendIcon />} disabled={!validate()}
+                        <Button data-cy="incident-submit" variant="contained" endIcon={<SendIcon />} disabled={!validate()}
                             onClick={() => {
                                 const newIncident = makeIncident();
                                 if (incident.id === -1) {
@@ -137,16 +137,17 @@ function IncidentCard(props: { incident: Incident, onCreate: (incident: Incident
             </Box>
             <Divider />
             <Box aria-label="incident-description" sx={{
-                display: "flex",
-                flexGrow: "1",
-                flexDirection: "column",
-                padding: "1rem",
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-all",
-                }}
-                onClick={() => {
-                    setEditDescription(true);
-                }}
+                        display: "flex",
+                        flexGrow: "1",
+                        flexDirection: "column",
+                        padding: "1rem",
+                        whiteSpace: "pre-wrap",
+                        wordBreak: "break-all",
+                    }}
+                    onClick={() => {
+                        setEditDescription(true);
+                    }}
+                    data-cy="incident-description"
                 >
                 {editDescription ? 
                 <TextareaAutosize style={{height: "100%"}} value={description}

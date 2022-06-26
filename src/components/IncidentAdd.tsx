@@ -17,7 +17,9 @@ const IncidentAdd = (props: {setSelectedIncident: React.Dispatch<React.SetStateA
     };
     return(
         <Box sx={{
-        }}>
+        }}
+            data-cy="incident-add"
+        >
             <IconButton
                 aria-label="add"
                 onClick={() => {

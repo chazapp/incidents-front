@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('Incidents App', () => {
+describe('Incidents Login', () => {
   beforeEach(() => {
   });
 
