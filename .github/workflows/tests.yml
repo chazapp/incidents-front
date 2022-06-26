@@ -62,14 +62,9 @@ jobs:
       - run: yarn build
         env:
           REACT_APP_API_URL: http://localhost:8000
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 10
-        
+  
       - run: yarn cypress:ci
         env:
-          CYPRESS_INCIDENTS_USER: $CYPRESS_INCIDENTS_USER
-          CYPRESS_INCIDENTS_PASSWORD: $CYPRESS_INCIDENTS_PASSWORD
-          CYPRESS_INCIDENTS_API_URL: $REACT_APP_API_URL
-      - name: Upload test video
-        run: curl --upload-file ./cypress/videos/login.cy.ts.mp4 https://transfer.sh/login.cy.ts.mp4
+          CYPRESS_INCIDENTS_USER: admin@incidents.com
+          CYPRESS_INCIDENTS_PASSWORD: sup3r-passw0rd
+          CYPRESS_INCIDENTS_API_URL: http://localhost:8000
