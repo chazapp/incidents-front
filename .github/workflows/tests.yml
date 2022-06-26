@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       api:
-        image: ghcr.io/incidents/incidents-api:latest
+        image: ghcr.io/chazapp/incidents-api:latest
 
         credentials: 
           username: chazapp
@@ -54,6 +54,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+
       - name: Migrate database
         run: docker exec -i api bash -c "python manage.py migrate"
 
