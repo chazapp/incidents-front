@@ -72,8 +72,8 @@ function IncidentCard(props: { incident: Incident, onCreate: (incident: Incident
                         }}
                         endAdornment={
                             <InputAdornment position="end" onClick={() => setEditTitle(!editTitle)}>
-                                <IconButton>
-                                    <EditIcon data-cy="incident-edit-title"/>
+                                <IconButton data-cy="incident-edit-title">
+                                    <EditIcon/>
                                 </IconButton>
                             </InputAdornment>
                         }

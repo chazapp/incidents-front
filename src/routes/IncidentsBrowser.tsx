@@ -114,7 +114,7 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
                             display: "flex",
                             flexDirection: "row",
                         }}>
-                            <IncidentSearch />
+                            <IncidentSearch setIncidents={setIncidents} setIsLoading={setIsLoading}/>
                         </Box>
                         <IncidentTable rows={incidents} onSelect={setSelectedIncident} isLoading={isLoading}/>  
                     </Box>

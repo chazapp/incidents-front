@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -167,6 +167,11 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
       page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+
+    // On search, reset the page to 0.
+    useEffect(() => {
+      setPage(0);
+    }, [rows])
   
     return (
       <Box sx={{ width: '100%' }}>
@@ -178,6 +183,7 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
               size={dense ? 'small' : 'medium'}
+              data-cy="incident-table"
             >
               <EnhancedTableHead
                 numSelected={selected.length}
@@ -239,6 +245,9 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            nextIconButtonProps={{
+              "aria-label": "incident-table-next-page",
+            }}
           />
         </Paper>
       </Box>
