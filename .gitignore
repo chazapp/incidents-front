@@ -128,3 +128,4 @@ yarn-error.log*
 cypress.env.json
 cypress/videos/
 cypress/pictures/
+cypress/screenshots
