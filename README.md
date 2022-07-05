@@ -21,3 +21,14 @@ $ yarn cypress:run
 $ yarn start
 ```
 
+You may also run the automated Cypress test suite.
+
+```
+# Provide the login credentials in your environment:
+$ echo "CYPRESS_INCIDENTS_USER=..." >> .env
+$ echo "CYPRESS_INCIDENTS_PASSWORD=..." >> .env
+# Run the test suite headlessly
+$ yarn cypress:run
+# Run the test suite in Cypress browser
+$ yarn cypress:open
+```
