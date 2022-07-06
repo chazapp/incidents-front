@@ -3,7 +3,8 @@
 describe('Incidents CRUD', () => {
 
     // Recursively find an element in table
-    function findIncidentInTable(incidentName: string) {
+    function findIncidentInTable(incidentName: string): void {
+        cy.get("[data-cy='incidents-table-linear-progress']").should('not.exist');
         cy.get("[data-cy='incident-table']").then((item) => {
             if (item.text().includes(incidentName)) {
                 return;
