@@ -1,13 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Login from './routes/Login';
-import IncidentBrowser from './routes/IncidentsBrowser';
-import { BrowserRouter, Router } from 'react-router-dom';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 import IncidentCard from './components/IncidentCard';
-import { Incident } from '.';
+import { Incident } from './index.d';
 import IncidentSearch from './components/IncidentSearch';
-import PersistentDrawer from './components/Navigation';
 
 
 test('renders the login page', () => {
@@ -27,8 +24,8 @@ test('renders the incident card component', () => {
     description: "",
     status: 'Open',
     severity: 'Low',
-    created_at: '2020-01-01',
-    updated_at: '2020-01-01',
+    created_at: new Date('2020-01-01'),
+    updated_at: new Date('2020-01-01'),
   };
 
   render(
