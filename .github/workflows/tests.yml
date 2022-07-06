@@ -63,13 +63,8 @@ jobs:
         env:
           REACT_APP_API_URL: http://localhost:8000
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        timeout-minutes: 10
-
       - run: yarn cypress:ci
         env:
           CYPRESS_INCIDENTS_USER: admin@incidents.com
           CYPRESS_INCIDENTS_PASSWORD: sup3r-passw0rd
           CYPRESS_INCIDENTS_API_URL: http://localhost:8000
-    
