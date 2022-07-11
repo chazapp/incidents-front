@@ -181,7 +181,6 @@ function IncidentTable(props: {
 
     return (
       <Box sx={{ width: '100%' }}>
-        <Typography variant="h6" id="tableTitle">Displaying {rows.length} of {totalRows} incidents</Typography>
         <Paper sx={{ width: '100%', mb: 2, padding: "1em" }} elevation={3}>
           <EnhancedTableToolbar numSelected={selected.length} setSelectedIncident={onSelect}/>
           {isLoading ? <LinearProgress data-cy="incidents-table-linear-progress" /> : null}
