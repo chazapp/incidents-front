@@ -152,8 +152,8 @@ function IncidentTable(props: {
     const { rows, onSelect, isLoading, pagination } = props;
     const { page, setPage, rowsPerPage, setRowsPerPage, totalRows } = pagination;
 
-    const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof Incident>('id');
+    const [order, setOrder] = React.useState<Order>('desc');
+    const [orderBy, setOrderBy] = React.useState<keyof Incident>('created_at');
     const [selected] = React.useState<Incident[]>([]);
     const [dense] = React.useState(true);
 
