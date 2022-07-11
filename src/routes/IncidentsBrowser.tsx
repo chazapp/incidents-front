@@ -27,10 +27,8 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
     }
    
     useEffect(() => {
-        console.log("Getting more incidents..")
         axios.get(`/incidents/?limit=${rowsPerPage}&offset=${page * rowsPerPage}`)
             .then(res => {
-                console.log("setting more incidents");
                 setIncidents(res.data.results);
                 setTotalRows(res.data.count);
                 setIsLoading(false);
