@@ -159,6 +159,7 @@ function PersistentDrawer(props: { children: React.ReactNode, pageName: string, 
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
+            data-cy="nav-menu"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
@@ -190,7 +191,7 @@ function PersistentDrawer(props: { children: React.ReactNode, pageName: string, 
         <Divider />
         <List>
           <ListItem key="dashboard">
-            <ListItemButton onClick={() => navigate('/dashboard')}>
+            <ListItemButton data-cy="nav-dashboard" onClick={() => navigate('/dashboard')}>
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
