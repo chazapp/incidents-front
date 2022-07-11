@@ -137,15 +137,26 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   };
 
 
-function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React.SetStateAction<Incident | null>>, isLoading: boolean }) {
-    const { rows, onSelect, isLoading } = props;
+function IncidentTable(props: { 
+    rows: Incident[],
+    onSelect: React.Dispatch<React.SetStateAction<Incident | null>>,
+    isLoading: boolean,
+    pagination: {
+        page: number,
+        setPage: React.Dispatch<React.SetStateAction<number>>,
+        rowsPerPage: number,
+        setRowsPerPage: React.Dispatch<React.SetStateAction<number>>,
+        totalRows: number,
+    }
+}) {
+    const { rows, onSelect, isLoading, pagination } = props;
+    const { page, setPage, rowsPerPage, setRowsPerPage, totalRows } = pagination;
+
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Incident>('id');
     const [selected] = React.useState<Incident[]>([]);
-    const [page, setPage] = React.useState(0);
     const [dense] = React.useState(true);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  
+
     const handleRequestSort = (
       event: React.MouseEvent<unknown>,
       property: keyof Incident,
@@ -166,18 +177,14 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
   
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-      page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+      page > 0 ? Math.max(0, rowsPerPage - rows.length) : 0;
 
-    // On search, reset the page to 0.
-    useEffect(() => {
-      setPage(0);
-    }, [rows])
-  
     return (
       <Box sx={{ width: '100%' }}>
+        <Typography variant="h6" id="tableTitle">Displaying {rows.length} of {totalRows} incidents</Typography>
         <Paper sx={{ width: '100%', mb: 2, padding: "1em" }} elevation={3}>
           <EnhancedTableToolbar numSelected={selected.length} setSelectedIncident={onSelect}/>
-          {isLoading ? <LinearProgress /> : null}
+          {isLoading ? <LinearProgress data-cy="incidents-table-linear-progress" /> : null}
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -192,9 +199,9 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
               />
-              <TableBody>
+              <TableBody
+              >
                 {rows.slice().sort(getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const { title, status, severity, created_at, updated_at } = row;
                     const labelId = `enhanced-table-checkbox-${index}`;
@@ -240,7 +247,7 @@ function IncidentTable(props: { rows: Incident[], onSelect: React.Dispatch<React
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={rows.length}
+            count={totalRows}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

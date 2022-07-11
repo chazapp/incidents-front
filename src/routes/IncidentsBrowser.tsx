@@ -14,11 +14,25 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
     const [isLoading, setIsLoading] = React.useState(true);
     const { menuOpen, setMenuOpen } = props;
     const [ selectedIncident, setSelectedIncident ] = React.useState<Incident | null>(null);
+    const [ page, setPage ] = React.useState(0);
+    const [ rowsPerPage, setRowsPerPage ] = React.useState(10);
+    const [ totalRows, setTotalRows ] = React.useState(0);
+
+    const pagination = {
+        page,
+        setPage,
+        rowsPerPage,
+        setRowsPerPage,
+        totalRows,
+    }
    
     useEffect(() => {
-        axios.get("/incidents/")
+        console.log("Getting more incidents..")
+        axios.get(`/incidents/?limit=${rowsPerPage}&offset=${page * rowsPerPage}`)
             .then(res => {
+                console.log("setting more incidents");
                 setIncidents(res.data.results);
+                setTotalRows(res.data.count);
                 setIsLoading(false);
             }).catch(err => {
                 console.log(err);
@@ -26,7 +40,7 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
                 setIsLoading(false);
             }
         );
-    }, []);
+    }, [page, rowsPerPage]);
 
     const onCreate = (incident: Incident) => {
         getCsrfToken().then(csrf => {
@@ -116,7 +130,7 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
                         }}>
                             <IncidentSearch setIncidents={setIncidents} setIsLoading={setIsLoading}/>
                         </Box>
-                        <IncidentTable rows={incidents} onSelect={setSelectedIncident} isLoading={isLoading}/>  
+                        <IncidentTable rows={incidents} onSelect={setSelectedIncident} isLoading={isLoading} pagination={pagination} />  
                     </Box>
                     {selectedIncident && <IncidentCard incident={selectedIncident} onCreate={onCreate} onDelete={onDelete} onUpdate={onUpdate} />}
                 </Box>
