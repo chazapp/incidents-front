@@ -100,6 +100,21 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
         })
     };
 
+    const onSearch = (search: string) => {
+        setIsLoading(true);
+        axios.get(`/incidents/?search=${search}`)
+            .then(res => {
+                setIncidents(res.data.results);
+                setTotalRows(res.data.count);
+                setIsLoading(false);
+            }).catch(err => {
+                console.log(err);
+            }).finally(() => {
+                setIsLoading(false);
+            }
+        );
+    }
+
     return (
         <Box sx={{
             display: "flex",
@@ -126,7 +141,7 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
                             display: "flex",
                             flexDirection: "row",
                         }}>
-                            <IncidentSearch setIncidents={setIncidents} setIsLoading={setIsLoading}/>
+                            <IncidentSearch onSearch={onSearch}/>
                         </Box>
                         <IncidentTable rows={incidents} onSelect={setSelectedIncident} isLoading={isLoading} pagination={pagination} />  
                     </Box>

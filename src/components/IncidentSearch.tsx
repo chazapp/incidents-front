@@ -7,9 +7,9 @@ import { Incident } from "../index.d";
 import axios from "axios";
 
 
-function IncidentSearch(props: {setIncidents: React.Dispatch<React.SetStateAction<Incident[]>>, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>}) {
+function IncidentSearch(props: {onSearch: (query: string) => void}) {
     const [searchValue, setSearchValue] = React.useState("");
-    const { setIncidents, setIsLoading } = props;
+    const { onSearch } = props;
 
     return (
         <Box sx={{
@@ -40,14 +40,7 @@ function IncidentSearch(props: {setIncidents: React.Dispatch<React.SetStateActio
                     }}
                     onKeyPress={(e) => {
                         if (e.key === "Enter") {
-                            setIsLoading(true);
-                            setIncidents([]);
-                            axios.get(`/incidents/?search=${searchValue}`)
-                                .then((res) => {
-                                    setIsLoading(false);
-                                    setIncidents(res.data.results);
-                                }
-                            )
+                            onSearch(searchValue);
                         }
                     }}
                 />
