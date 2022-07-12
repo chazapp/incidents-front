@@ -3,9 +3,6 @@ import { Box, FormControl, IconButton, InputAdornment,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
 import React from "react";
-import { Incident } from "../index.d";
-import axios from "axios";
-
 
 function IncidentSearch(props: {onSearch: (query: string) => void}) {
     const [searchValue, setSearchValue] = React.useState("");
