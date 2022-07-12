@@ -4,6 +4,8 @@ on:
     tags:
       - 'v*.*.*'
 jobs:
+  tests:
+    uses: ./.github/workflows/tests.yml
   Publish:
     runs-on: ubuntu-latest
     steps:
