@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       api:
-        image: ghcr.io/chazapp/incidents-api:1.0.7-x86
+        image: ghcr.io/chazapp/incidents-api:latest
         credentials: 
           username: chazapp
           password: ${{ secrets.GHCR_SECRET }}
