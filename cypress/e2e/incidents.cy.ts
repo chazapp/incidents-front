@@ -4,7 +4,7 @@ describe('Incidents CRUD', () => {
 
     // Recursively find an element in table
     function findIncidentInTable(incidentName: string): void {
-        cy.wait(5000); // Dirty hack to wait for table to load in CI
+        cy.wait(3000); // Dirty hack to wait for table to load in CI
         cy.get("[data-cy='incidents-table-linear-progress']").should('not.exist');
         cy.get("[data-cy='incident-table']").then((item) => {
             if (item.text().includes(incidentName)) {
