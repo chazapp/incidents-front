@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import IncidentCard from './components/IncidentCard';
 import { Incident } from './index.d';
 import IncidentSearch from './components/IncidentSearch';
+import IncidentTable from './components/IncidentTable';
 
 
 test('renders the login page', () => {
@@ -44,4 +45,42 @@ test('renders the incident search component', () => {
       onSearch={() => {}}
     />
   )
-})
+});
+
+test('renders the incident table component', () => {
+  const incidents: Incident[] = [
+    {
+      id: 1,
+      title: 'Test Incident',
+      description: "",
+      status: 'Open',
+      severity: 'Low',
+      created_at: new Date('2020-01-01'),
+      updated_at: new Date('2020-01-01'),
+    },
+    {
+      id: 2,
+      title: 'Test Incident',
+      description: "",
+      status: 'Open',
+      severity: 'Low',
+      created_at: new Date('2020-01-01'),
+      updated_at: new Date('2020-01-01'),
+    },
+  ];
+
+  render(
+    <IncidentTable
+      rows={incidents}
+      onSelect={() => {}}
+      isLoading={false}
+      pagination={{
+          page: 1,
+          rowsPerPage: 10,
+          setPage: () => {},
+          setRowsPerPage: () => {},
+          totalRows: 2,
+      }}
+    />
+  )
+});
