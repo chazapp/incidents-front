@@ -36,7 +36,6 @@ interface EnhancedTableProps {
   
 
 const headCells: HeadCell[] = [
-    { id: 'id', numeric: false, disablePadding: true, label: 'ID' },
     { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
     { id: 'status', numeric: false, disablePadding: true, label: 'Status' },
     { id: 'severity', numeric: false, disablePadding: true, label: 'Severity' },
@@ -203,7 +202,6 @@ function IncidentTable(props: {
                 {rows.slice().sort(getComparator(order, orderBy))
                   .map((row, index) => {
                     const { title, status, severity, created_at, updated_at } = row;
-                    const labelId = `enhanced-table-checkbox-${index}`;
                     return (
                       <TableRow
                         hover
@@ -215,14 +213,6 @@ function IncidentTable(props: {
                           cursor: 'pointer',
                         }}
                       >
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                        >
-                          {row.id}
-                        </TableCell>
                         <TableCell align="left">{title}</TableCell>
                         <TableCell align="left">{status}</TableCell>
                         <TableCell align="left">{severity}</TableCell>
