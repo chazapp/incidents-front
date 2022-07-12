@@ -41,8 +41,7 @@ test('renders the incident card component', () => {
 test('renders the incident search component', () => {
   render(
     <IncidentSearch
-      setIncidents={() => {}}
-      setIsLoading={() => {}}
+      onSearch={() => {}}
     />
   )
 })
