@@ -108,7 +108,6 @@ function Login() {
                 display: "flex",
                 width: "25vw",
                 height: "100vh",
-                backgroundColor: "white",
             }}>
                 <LoginForm />
             </Box>
