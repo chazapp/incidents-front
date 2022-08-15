@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, Theme } from "@mui/material";
 import { Incident } from "../index.d";
 import PersistentDrawer from "../components/Navigation";
 import IncidentCard from "../components/IncidentCard";
@@ -9,10 +9,10 @@ import IncidentSearch from "../components/IncidentSearch";
 import axios from "axios";
 import { getCsrfToken } from "../utils";
 
-function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+function IncidentBrowser(props: {setTheme: React.Dispatch<React.SetStateAction<Theme>>, menuOpen: boolean, setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
     const [incidents, setIncidents] = React.useState<Incident[]>([]);
     const [isLoading, setIsLoading] = React.useState(true);
-    const { menuOpen, setMenuOpen } = props;
+    const { setTheme, menuOpen, setMenuOpen } = props;
     const [ selectedIncident, setSelectedIncident ] = React.useState<Incident | null>(null);
     const [ page, setPage ] = React.useState(0);
     const [ rowsPerPage, setRowsPerPage ] = React.useState(10);
@@ -122,6 +122,7 @@ function IncidentBrowser(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<
             columnGap: "1vh",
         }}>
             <PersistentDrawer
+                setTheme={setTheme}
                 open={menuOpen}
                 setOpen={setMenuOpen}
                 pageName="Incidents"

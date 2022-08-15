@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Theme, Typography } from "@mui/material";
 import PersistentDrawer from "../components/Navigation";
 
 
-function Dashboard(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const { menuOpen, setMenuOpen } = props;
+function Dashboard(props: {setTheme: React.Dispatch<React.SetStateAction<Theme>>, menuOpen: boolean, setMenuOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+    const { menuOpen, setMenuOpen, setTheme } = props;
     const [incidentCount, setIncidentCount] = React.useState(0);
     useEffect(() => {
         axios.get("/incidents/")
@@ -25,6 +25,7 @@ function Dashboard(props: {menuOpen: boolean, setMenuOpen: React.Dispatch<React.
         }}>
             <PersistentDrawer
                 open={menuOpen}
+                setTheme={setTheme}
                 setOpen={setMenuOpen}
                 pageName="Dashboard"
             >

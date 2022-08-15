@@ -24,6 +24,10 @@ import { useNavigate } from 'react-router';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { getCsrfToken } from '../utils';
+import { darkTheme, lightTheme } from "../App";
+import { Theme } from '@mui/material';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 
 const drawerWidth = 240;
 
@@ -128,10 +132,10 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-function PersistentDrawer(props: { children: React.ReactNode, pageName: string, open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+function PersistentDrawer(props: { setTheme: React.Dispatch<React.SetStateAction<Theme>>, children: React.ReactNode, pageName: string, open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
   const theme = useTheme();
 
-  const { open, setOpen, pageName } = props;
+  const { setTheme, open, setOpen, pageName } = props;
   const navigate = useNavigate();
   
 
@@ -141,6 +145,10 @@ function PersistentDrawer(props: { children: React.ReactNode, pageName: string, 
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleThemeSwitcher = () => {
+    setTheme(theme.palette.mode === "dark" ? lightTheme : darkTheme);
   };
 
   useEffect(() => {
@@ -167,6 +175,12 @@ function PersistentDrawer(props: { children: React.ReactNode, pageName: string, 
           <Typography sx={{flexGrow: "1"}} variant="h6" noWrap component="div">
             {pageName}
           </Typography>
+          <IconButton
+            onClick={handleThemeSwitcher}
+            data-cy='theme-switcher'
+          >
+            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
           <SideMenu />
         </Toolbar>
       </AppBar>
@@ -199,7 +213,7 @@ function PersistentDrawer(props: { children: React.ReactNode, pageName: string, 
             </ListItemButton>
           </ListItem>
           <ListItem key="incidents">
-            <ListItemButton onClick={() => navigate('/')}>
+            <ListItemButton data-cy="nav-incidents" onClick={() => navigate('/')}>
               <ListItemIcon>
                 <MailIcon />
               </ListItemIcon>
