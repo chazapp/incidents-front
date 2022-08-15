@@ -56,7 +56,7 @@ jobs:
           node-version: 16
 
       - name: Migrate database
-        run: docker exec -i api bash -c "python manage.py migrate"
+        run: docker exec -i api ash -c "python manage.py migrate"
 
       - run: yarn install --frozen-lockfile
       - run: yarn build
