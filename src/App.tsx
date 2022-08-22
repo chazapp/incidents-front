@@ -21,7 +21,12 @@ export const lightTheme = createTheme({
 })
 
 function App() {
-  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
+  if (window.env && window.env.API_URL) {
+    axios.defaults.baseURL = window.env.API_URL;
+  } else {
+    axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+  }
   axios.defaults.withCredentials = true;
 
   
