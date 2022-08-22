@@ -1,8 +1,6 @@
 FROM node:16-alpine AS builder
 WORKDIR /app
 
-ARG REACT_APP_API_URL=https://incidents-api.chaz.pro
-ENV REACT_APP_API_URL $REACT_APP_API_URL
 ENV GENERATE_SOURCEMAP=false
 
 COPY package.json package.json
