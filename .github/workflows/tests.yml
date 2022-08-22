@@ -59,12 +59,21 @@ jobs:
         run: docker exec -i api ash -c "python manage.py migrate"
 
       - run: yarn install --frozen-lockfile
-      - run: yarn build
-        env:
-          REACT_APP_API_URL: http://localhost:8000
 
       - run: yarn cypress:ci
         env:
           CYPRESS_INCIDENTS_USER: admin@incidents.com
           CYPRESS_INCIDENTS_PASSWORD: sup3r-passw0rd
           CYPRESS_INCIDENTS_API_URL: http://localhost:8000
+          REACT_APP_API_URL: http://localhost:8000
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+  
