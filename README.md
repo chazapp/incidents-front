@@ -32,3 +32,17 @@ $ yarn cypress:run
 # Run the test suite in Cypress browser
 $ yarn cypress:open
 ```
+
+## Production build
+This repository contains a Dockerfile that will make a production build
+of the application then run it in Nginx. The build step is not aware of
+where to find the API that this client implements.
+You must mount the `env.js` file at runtime in the application build directory: 
+
+```
+// build/env.js
+window.env = {
+    "API_URL": "<your Incidents API endpoint>"
+}
+```
+

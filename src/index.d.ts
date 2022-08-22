@@ -8,3 +8,10 @@ export interface Incident {
     updated_at: Date,
 }
 
+declare global {
+    interface Window {
+        env: {
+            API_URL: string
+        }
+    }
+}
